@@ -19,8 +19,8 @@ type KCFCF struct {
 	kubeconfig   *string
 	context      *string
 	inCluster    *bool
-	kubeApiQps   *float64
-	kubeApiBurst *float64
+	kubeAPIQps   *float64
+	kubeAPIBurst *float64
 }
 
 // NewKCFCF returns a new KCFCF structure
@@ -38,8 +38,8 @@ func (f *KCFCF) Init() {
 	}
 	f.context = flag.String("context", "", "(optional) kubeconfig file context to use")
 	f.inCluster = flag.Bool("in-cluster", false, "use in-cluster config for Kubernetes API")
-	f.kubeApiQps = flag.Float64("kube-api-qps", 5.0, `QPS limit when making requests to Kubernetes apiserver`)
-	f.kubeApiBurst = flag.Float64("kube-api-burst", 10.0, `QPS burst limit when making requests to Kubernetes apiserver`)
+	f.kubeAPIQps = flag.Float64("kube-api-qps", 5.0, `QPS limit when making requests to Kubernetes apiserver`)
+	f.kubeAPIBurst = flag.Float64("kube-api-burst", 10.0, `QPS burst limit when making requests to Kubernetes apiserver`)
 }
 
 // GetConfig returns parsed config from CLI flags
@@ -62,8 +62,8 @@ func (f *KCFCF) GetConfig() *rest.Config {
 		}
 	}
 
-	config.QPS = float32(*f.kubeApiQps)
-	config.Burst = int(*f.kubeApiBurst)
+	config.QPS = float32(*f.kubeAPIQps)
+	config.Burst = int(*f.kubeAPIBurst)
 
 	return config
 }
